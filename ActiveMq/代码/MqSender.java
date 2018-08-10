@@ -32,7 +32,7 @@ public class MqSender {
 
         jmsTemplate.send(destination, new MessageCreator() {
             public Message createMessage(Session session) throws JMSException {
-                return session.createTextMessage("{\"msg\":\"CRM测试一下消息\"}");
+                return session.createTextMessage("{\"msg\":\"测试一下消息\"}");
             }
         });
     }
