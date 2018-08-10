@@ -1,0 +1,38 @@
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:amq="http://activemq.apache.org/schema/core"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans
+	http://www.springframework.org/schema/beans/spring-beans-4.3.xsd
+	http://activemq.apache.org/schema/core http://activemq.apache.org/schema/core/activemq-core.xsd">
+
+
+	<description>Spring消息队列配置</description>
+	<bean id="jmsFactory" class="org.apache.activemq.ActiveMQConnectionFactory">
+		<property name="brokerURL" value="${activemq.broker.url}"/>
+		<property name="userName" value="${activemq.username}"/>
+		<property name="password" value="${activemq.password}"/>
+		<property name="useAsyncSend" value="true"/>
+	</bean>
+	<bean id="pooledJmsFactory" class="org.apache.activemq.pool.PooledConnectionFactory">
+          <property name="connectionFactory" ref="jmsFactory"/>
+    </bean>
+    <bean id="jmsTemplate" class="org.springframework.jms.core.JmsTemplate">
+          <property name="connectionFactory" ref="pooledJmsFactory" />
+    </bean>
+
+    <bean id="orderQueue" class="org.apache.activemq.command.ActiveMQQueue">
+        <constructor-arg index="0" value="${activemq.queue.name}"/>
+    </bean>
+
+
+    <!--消费者配置-->
+    <!---ActiveMqListener 需要实现接口javax.jms.MessageListener onMessage方法-->
+    <bean id="orderQueueListener" class="com.**.**.ActiveMqListener"/>
+    <!-- 消息监听容器 -->
+    <bean id="jmsContainer"  class="org.springframework.jms.listener.DefaultMessageListenerContainer">
+        <property name="connectionFactory" ref="pooledJmsFactory" />
+        <property name="destination" ref="orderQueue" />
+        <property name="messageListener" ref="orderQueueListener" />
+    </bean>
+
+</beans>
