@@ -26,7 +26,6 @@ public class MessageSender {
 	 * @Title: sendMessage
 	 * @param destination
 	 * @param message
-	 * @author: WangZhao
 	 * @date 2016年7月22日 上午11:28:19
 	 */
 	public void sendTxtMessage(Destination destination, final String message){
@@ -44,7 +43,6 @@ public class MessageSender {
 	 * @Description: TODO(这里用一句话描述这个方法的作用)
 	 * @param destination
 	 * @param object TODO(这里用一句话描述这个方法的参数和返回数据)
-	 * @author: WangZhao
 	 * @date 2016年7月26日 下午4:55:56
 	 */
 	public <T extends Serializable> void sendObjectMessage(Destination destination,final T object){
@@ -63,7 +61,6 @@ public class MessageSender {
 	 * 发送消息
 	 * @Title: sendMessage
 	 * @param destination
-	 * @author: WangZhao
 	 * @date 2016年7月22日 上午11:28:19
 	 */
 	public void sendStreamMessage(Destination destination,final String data,final File file){
